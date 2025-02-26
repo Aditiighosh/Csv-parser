@@ -29,6 +29,11 @@ This project is a CSV parsing and user management application built with Next.js
 - Node.js (v14 or higher)
 - Redis server
 
+## Required packages
+ ```bash
+ npm install multer csv-parser bull axios redis
+    ```
+
 ### Installation
 
 1. Clone the repository:
