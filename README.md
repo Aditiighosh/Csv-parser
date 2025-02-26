@@ -1,4 +1,4 @@
-#Assignment: CSV File Upload and Parsing with Background Jobs in Next.js
+# Assignment: CSV File Upload and Parsing with Background Jobs in Next.js
 
 ## Overview
 
@@ -84,23 +84,23 @@ This project is a CSV parsing and user management application built with Next.js
 ## ⚡Edge cases handled
 
 ### 📁 CSV File Validation in /api/upload Route
-✅ The uploaded CSV file may not have columns named exactly as name and email.
-🔄 I handled different variations (e.g., Name, full_name, Email Address, etc.) by normalizing the column names during validation.
-⚠️ If required fields are missing after normalization, appropriate error responses are returned.
+- The uploaded CSV file may not have columns named exactly as `name` and `email`.
+- I handled different variations (e.g., `Name`, `full_name`, `Email Address`, etc.) by normalizing the column names during validation.
+- If required fields are missing after normalization, appropriate error responses are returned.
 
 ### 👥 Flexible User Addition in /api/addUser Route
-🔄 The order of columns in the CSV file may vary. I ensured that the correct data maps to the right fields regardless of the column order.
-✂️ The CSV file might contain additional columns. I ensured that only the required fields are processed, and extra fields are ignored without affecting the process.
-➕ Partial data: the data of additional columns is missing, the system adds available data while leaving the missing fields blank without causing errors.
+- 🔄 The order of columns in the CSV file may vary. I ensured that the correct data maps to the right fields regardless of the column order.
+- ✂️ The CSV file might contain additional columns. I ensured that only the required fields are processed, and extra fields are ignored without affecting the process.
+- ➕ Partial data: the data of additional columns is missing, the system adds available data while leaving the missing fields blank without causing errors.
 
 ### 🏃 Job Queuing with Bull
-⚡ In the /api/addUser route, I implemented job queuing using Bull.
-🔄 The API supports adding multiple users at once, and these requests are processed asynchronously in the background for better performance.
-🕒 The system provides real-time feedback during the job processing phase.
+- ⚡ In the /api/addUser route, I implemented job queuing using Bull.
+- 🔄 The API supports adding multiple users at once, and these requests are processed asynchronously in the background for better performance.
+- 🕒 The system provides real-time feedback during the job processing phase.
 
 ### 🐞 Testing & Debugging
-📝 Added detailed console logs throughout the code for easier testing and debugging.
-🚨 Logs provide step-by-step visibility during file upload, parsing, validation, user addition, and job processing stages.
+- 📝 Added detailed console logs throughout the code for easier testing and debugging.
+- 🚨 Logs provide step-by-step visibility during file upload, parsing, validation, user addition, and job processing stages.
 
 
 ### License
