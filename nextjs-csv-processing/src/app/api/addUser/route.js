@@ -4,12 +4,26 @@ import { NextResponse } from 'next/server';
 import csvParser from 'csv-parser';
 import { Readable } from 'stream';
 import { stringify } from 'csv-stringify/sync';
+import userQueue from '/workspaces/CRUD/nextjs-csv-processing/src/queue.js';
 
 export async function POST(req) {
   try {
     // Parse JSON body sent from the request for data
-    const { email, identifier, firstName, lastName, csvFilePath } = await req.json();
-    console.log('Received request data:', { email, identifier, firstName, lastName, csvFilePath });
+    const { entries, csvFilePath } = await req.json();
+    console.log('Received request data:', { entries, csvFilePath });
+
+    // Validate the data
+    if (!entries || !csvFilePath) {
+      return NextResponse.json({ error: 'Please provide all the fields' }, { status: 400 });
+    }
+
+    // Validate each entry
+    for (const entry of entries) {
+      const { email, identifier, firstName, lastName } = entry;
+      if (!email || !identifier || !firstName || !lastName) {
+        return NextResponse.json({ error: 'Please provide all the fields' }, { status: 400 });
+      }
+    }
 
     const fileName = path.basename(csvFilePath);
     console.log('File name:', fileName);
@@ -18,14 +32,17 @@ export async function POST(req) {
     const absoluteFilePath = path.join(process.cwd(), 'public', csvFilePath);
     console.log('Resolved file path:', absoluteFilePath);
 
-    // Validate the data
-    if (!firstName || !lastName || !identifier || !email || !csvFilePath) {
-      return NextResponse.json({ error: 'Please provide all the fields' }, { status: 400 });
-    }
-
     // Check if the file exists at the specified path
     if (!fs.existsSync(absoluteFilePath)) {
       return NextResponse.json({ error: 'File not found' }, { status: 404 });
+    }
+
+    // Add jobs to the queue for each entry
+    for (const entry of entries) {
+      const { email, identifier, firstName, lastName } = entry;
+      const jobData = { email, identifier, firstName, lastName, csvFilePath };
+      await userQueue.add({ data: jobData });
+      console.log('Job added to the queue:', jobData);
     }
 
     // Read the existing CSV file
@@ -48,21 +65,24 @@ export async function POST(req) {
     });
 
     // Add the new user data to the rows
-    const newUser = {};
-    csvHeaders.forEach(header => {
-      if (header.toLowerCase().includes('email')) {
-        newUser[header] = email;
-      } else if (header.toLowerCase().includes('identifier')) {
-        newUser[header] = identifier;
-      } else if (header.toLowerCase().includes('first name')) {
-        newUser[header] = firstName;
-      } else if (header.toLowerCase().includes('last name')) {
-        newUser[header] = lastName;
-      } else {
-        newUser[header] = ''; // Fill other columns with empty values
-      }
-    });
-    rows.push(newUser);
+    for (const entry of entries) {
+      const { email, identifier, firstName, lastName } = entry;
+      const newUser = {};
+      csvHeaders.forEach(header => {
+        if (header.toLowerCase().includes('email')) {
+          newUser[header] = email;
+        } else if (header.toLowerCase().includes('identifier')) {
+          newUser[header] = identifier;
+        } else if (header.toLowerCase().includes('first name')) {
+          newUser[header] = firstName;
+        } else if (header.toLowerCase().includes('last name')) {
+          newUser[header] = lastName;
+        } else {
+          newUser[header] = ''; // Fill other columns with empty values
+        }
+      });
+      rows.push(newUser);
+    }
 
     // Convert the rows back to CSV format
     const updatedCsv = stringify(rows, { header: true, delimiter: ';' });
@@ -74,9 +94,9 @@ export async function POST(req) {
     console.log('Download link:', downloadLink);
 
     // Return success response
-    return NextResponse.json({ success: 'User added successfully', userData: newUser, downloadLink }, { status: 200 });
+    return NextResponse.json({ success: 'Users added successfully', downloadLink }, { status: 200 });
   } catch (error) {
-    console.error('Error in adding user:', error);
+    console.error('Error in adding users:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

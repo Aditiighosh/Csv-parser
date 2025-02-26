@@ -10,6 +10,8 @@ export default function HomePage() {
   const [userData, setUserData] = useState({ email: '', identifier: '', firstName: '', lastName: '' });
   const [userAddedMessage, setUserAddedMessage] = useState('');
   const [downloadLink, setDownloadLink] = useState('');
+  const [jobStatus, setJobStatus] = useState('');
+  const [userEntries, setUserEntries] = useState<{ email: string; identifier: string; firstName: string; lastName: string; }[]>([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] || null;
@@ -46,10 +48,17 @@ export default function HomePage() {
     }
   };
 
+  const handleAddEntry = () => {
+    console.log("Adding user data:", userData);
+    setUserEntries([...userEntries, userData]);
+    setUserData({ email: '', identifier: '', firstName: '', lastName: '' });
+  };
+
   const handleAddUser = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const payload = { ...userData, csvFilePath: filePath };
+      const payload = { entries : userEntries, csvFilePath: filePath };
+      console.log("submitting users : ", payload);
       const response = await axios.post('/api/addUser', payload, {
         headers: {
           'Content-Type': 'application/json',
@@ -61,8 +70,9 @@ export default function HomePage() {
         setUserAddedMessage('User added successfully');
       }, 1000);
       setDownloadLink(response.data.downloadLink);
+      setJobStatus("Job added to queue successfully");
       // Reset the form and user data
-      setUserData({ email: '', identifier: '', firstName: '', lastName: '' });
+      setUserEntries([]);
      
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -71,6 +81,7 @@ export default function HomePage() {
         console.error('❌ Unexpected error:', error);
       }
       setUserAddedMessage('Failed to add user');
+      setJobStatus("Job failed to add to queue");
     }
   };
 
@@ -126,11 +137,19 @@ export default function HomePage() {
             className="mb-2 p-2 border rounded-lg w-full"
           />
           <button
-            type="submit"
+            type="button"
+            onClick={handleAddEntry} // Call handleAddEntry without arguments
             className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
           >
             Add User
           </button>
+          <button 
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+          >
+            Submit all users
+          </button>
+
         </form>
       )}
 
