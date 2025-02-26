@@ -32,7 +32,7 @@ This project is a CSV parsing and user management application built with Next.js
 ## Required packages
  ```bash
  npm install multer csv-parser bull axios redis
-    ```
+ ```
 
 ### Installation
 
