@@ -104,19 +104,19 @@ This project is a CSV parsing and user management application built with Next.js
 
 ## 🚀 Future Plan / Suggested Work
 
-🧑‍💼 User Profiles & Authentication
-	•	Implement user authentication (using NextAuth.js or JWT) so that each user can securely log in and manage their data.
-	•	Create personalized user dashboards where users can:
-	•	🔒 View and manage previously uploaded CSV files.
-	•	📈 Track the status of file processing jobs.
-	•	✍️ Edit user data directly from the dashboard.
+### 🧑‍💼 User Profiles & Authentication
+- Implement user authentication (using NextAuth.js or JWT) so that each user can securely log in and manage their data.
+- Create personalized user dashboards where users can:
+- 🔒 View and manage previously uploaded CSV files.
+- 📈 Track the status of file processing jobs.
+- ✍️ Edit user data directly from the dashboard.
 
-📂 File Management System
-	•	Provide version history for uploaded files, allowing users to download previous versions or restore them.
-	•	Implement file renaming, deletion, and categorization features for better organization.
+### 📂 File Management System
+- Provide version history for uploaded files, allowing users to download previous versions or restore them.
+- Implement file renaming, deletion, and categorization features for better organization.
 
-📊 Advanced Analytics & Reporting
-	•	Add data visualization to provide insights based on uploaded CSV data (e.g., user distribution, missing data trends).
+### 📊 Advanced Analytics & Reporting
+- Add data visualization to provide insights based on uploaded CSV data (e.g., user distribution, missing data trends).
 
 ### License
 
