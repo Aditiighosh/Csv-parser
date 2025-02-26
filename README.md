@@ -29,10 +29,7 @@ This project is a CSV parsing and user management application built with Next.js
 - Node.js (v14 or higher)
 - Redis server
 
-## Required packages
- ```bash
- npm install multer csv-parser bull axios redis
- ```
+
 
 ### Installation
 
@@ -48,6 +45,10 @@ This project is a CSV parsing and user management application built with Next.js
     ```bash
     npm install
     ```
+## Required packages
+ ```bash
+ npm install multer csv-parser bull axios redis
+ ```
 
 3. Start the Redis server:
 
@@ -56,18 +57,18 @@ This project is a CSV parsing and user management application built with Next.js
     ```
 
 ### Running the Application
+1. Start the worker process:
 
-1. Start the Next.js development server:
+    ```bash
+    npm run worker
+    ```
+2. Start the Next.js development server:
 
     ```bash
     npm run dev
     ```
 
-2. Start the worker process:
 
-    ```bash
-    npm run worker
-    ```
 
 3. Open your browser and navigate to `http://localhost:3000` to access the application.
 
