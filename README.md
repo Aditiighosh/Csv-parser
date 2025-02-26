@@ -92,7 +92,7 @@ This project is a CSV parsing and user management application built with Next.js
 - 🔄 The order of columns in the CSV file may vary. I ensured that the correct data maps to the right fields regardless of the column order.
 - ✂️ The CSV file might contain additional columns. I ensured that only the required fields are processed, and extra fields are ignored without affecting the process.
 - ➕ Partial data: the data of additional columns is missing, the system adds available data while leaving the missing fields blank without causing errors.
-
+- 📝 Downloadable Updated File: After successfully adding new users, provided an option to download the updated CSV file with the new user data appended.
 ### 🏃 Job Queuing with Bull
 - ⚡ In the /api/addUser route, I implemented job queuing using Bull.
 - 🔄 The API supports adding multiple users at once, and these requests are processed asynchronously in the background for better performance.
