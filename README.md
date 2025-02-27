@@ -1,6 +1,7 @@
 # Assignment: CSV File Upload and Parsing with Background Jobs in Next.js
 ## Please watch the demo video of the working and explanation of application
 [![watch the video]](https://drive.google.com/file/d/1opATprdr_Iu09MeSYJapC71YjjptTSeZ/view?usp=drivesdk)
+![Screenshot 2025-02-27 205130](https://github.com/user-attachments/assets/c67728d1-729d-468d-957a-c9e61b3e5638)
 
 ## Overview
 
