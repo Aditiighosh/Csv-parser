@@ -1,8 +1,13 @@
 # Assignment: CSV File Upload and Parsing with Background Jobs in Next.js
 ## Please watch the demo video of the working and explanation of application
 [![watch the video]](https://drive.google.com/file/d/1opATprdr_Iu09MeSYJapC71YjjptTSeZ/view?usp=drivesdk)
-![Screenshot 2025-02-27 205130](https://github.com/user-attachments/assets/c67728d1-729d-468d-957a-c9e61b3e5638)
 
+<!-- Embed your image with HTML to specify width or height -->
+<img 
+  src="https://github.com/user-attachments/assets/c67728d1-729d-468d-957a-c9e61b3e5638" 
+  alt="Screenshot" 
+  width="400" 
+/>
 ## Overview
 
 This project is a CSV parsing and user management application built with Next.js. It allows users to upload a CSV file, add multiple user entries, and process these entries in the background using a job queue powered by Redis and Bull. The processed data is then saved back to the CSV file, and users can download the updated file.
